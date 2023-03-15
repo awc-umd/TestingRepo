@@ -11,5 +11,11 @@ app.get("/", (request, response) => {
     response.render("RSVPForm.ejs");
 });
 
-app.listen(portNumber);
-process.stdout.write(`Webserver started and running at http://localhost:${portNumber}\n`);
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(helmet());
+app.use(compression()); // Compress all routes
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/", indexRouter);
