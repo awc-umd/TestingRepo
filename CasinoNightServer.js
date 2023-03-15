@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 portNumber = 5001
 
 app.get("/", (request, response) => {
-    response.render("RSVPForm.ejs");
+    response.render("index.ejs");
 });
 
 app.use(express.urlencoded({ extended: false }));
