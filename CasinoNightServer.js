@@ -5,8 +5,6 @@ const bodyParser = require("body-parser"); /* To handle post parameters */
 const path = require("path");
 app.use(bodyParser.urlencoded({ extended: false }));
 
-portNumber = 5001
-
 app.get("/", (request, response) => {
     response.render("RSVPForm.ejs");
 });
@@ -24,4 +22,4 @@ app.post("/ConfirmationPage", async (request, response) => {
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, "public")));
+app.listen(process.env.PORT || 3000);
