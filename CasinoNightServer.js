@@ -8,14 +8,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 portNumber = 5001
 
 app.get("/", (request, response) => {
-    response.render("index.ejs");
+    response.render("RSVPForm.ejs");
+});
+
+app.post("/ConfirmationPage", async (request, response) => {
+
+    url = "https://api.qrserver.com/v1/create-qr-code/?data=" + request.body.email + "&size=100x100";
+    const variables = {
+        url : url,
+        name : request.body.firstName +" "+ request.body.lastName
+    };
+
+    response.render("../templates/ConfirmationPage.ejs", variables);
 });
 
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(helmet());
-app.use(compression()); // Compress all routes
 
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/", indexRouter);
