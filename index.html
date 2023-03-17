@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>RSVP Form</title>
     <link href="/style.css" rel="stylesheet" type="text/css">
-
+    <script src="CasinoNightServer.js"></script>s
 </head>
 <body>
     <header><h1><strong>RSVP Form</strong></h1></header>
@@ -12,9 +12,9 @@
             have you sent money to our venmo (checkbox) (what's your username) -->
     
     <div>
-        <form action="ConfirmationPage" method="post">
+        <form action="ConfirmationPage.html">
             <fieldset>
-                <legend><strong>Contact Information</strong></legend>
+                <legend><strong>Edited Version Running Contact Information</strong></legend>
 
                 <label><strong>First Name: </strong><input type="text" name="firstName" required/></label><br><br>
 
@@ -69,7 +69,7 @@
             </fieldset>
             <br>
             
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" onclick="process()"/>
         </form>
     </div>
 </body>

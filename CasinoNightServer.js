@@ -1,25 +1,32 @@
-const http = require("http");
-const express = require("express");   /* Accessing express module */
-const app = express();  /* app is a request handler function */
-const bodyParser = require("body-parser"); /* To handle post parameters */
-const path = require("path");
-app.use(bodyParser.urlencoded({ extended: false }));
+const userName = "exampleuser";
+const password = "examplepassword";
+const databaseAndCollection = {db: "AWC", collection: "CasinoNight2022"};
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
-app.get("/", (request, response) => {
-    response.render("RSVPForm.ejs");
-});
+var client = null;
+async function main() {
+    const uri = `mongodb+srv://${userName}:${password}@cluster0.pzsxtoz.mongodb.net/?retryWrites=true&w=majority`;
+    client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+    await client.connect();
+}
 
-app.post("/ConfirmationPage", async (request, response) => {
-
-    url = "https://api.qrserver.com/v1/create-qr-code/?data=" + request.body.email + "&size=100x100";
-    const variables = {
-        url : url,
-        name : request.body.firstName +" "+ request.body.lastName
+async function process() {
+    const attendee = {
+        firstname : "if this is in it works",
+        lastname : "WORKS",
+        email : "email@something",
+        dietaryrestrictions : "restrictions",
+        phonenumber : "443-555",
+        numbertickets: "3",
+        guests: "3,3,",
+        venmo: "venmo"
     };
 
-    response.render("../templates/ConfirmationPage.ejs", variables);
-});
+    id = await insertAttendee(client, databaseAndCollection, attendee);
+    console.log("ready");
+};
 
-app.use(express.urlencoded({ extended: false }));
-
-app.listen(process.env.PORT || 3000);
+async function insertAttendee(client, databaseAndCollection, attendee) {
+    const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(attendee);
+    return result.insertedId;
+}
